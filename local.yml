@@ -1,0 +1,22 @@
+version: '3.8'
+
+volumes:
+    local_traefik: {}
+
+services:
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/local/traefik/Dockerfile
+    image: mcardozo/local_traefik
+    container_name: local_traefik
+    networks:
+      - proxy
+    volumes:
+      - local_traefik:/etc/traefik/acme:z
+    ports:
+      - "0.0.0.0:5050:80"
+
+networks:
+  proxy:
+    name: local_trefik_proxy
